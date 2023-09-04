@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:todo_app/token_box.dart';
+import 'package:todo_app/adapter/token_box.dart';
 import '../../model/product_model.dart';
 
 class CreateProductScreen extends StatefulWidget {

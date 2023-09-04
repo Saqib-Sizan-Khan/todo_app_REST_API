@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:todo_app/token_box.dart';
+import 'package:todo_app/adapter/product_adapter.dart';
+import 'package:todo_app/model/product_model.dart';
+import 'package:todo_app/adapter/token_box.dart';
 import 'package:todo_app/ui/screens/login_screen.dart';
 import 'package:todo_app/ui/screens/product_list.dart';
 
@@ -14,6 +16,9 @@ void main() async {
   }
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
+
+  await Hive.openBox<Product>('productBox');
+  Hive.registerAdapter(ProductAdapter());
   runApp(MyApp(initialRoute: await _determineInitialRoute()));
 }
 

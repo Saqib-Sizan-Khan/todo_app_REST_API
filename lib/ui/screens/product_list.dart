@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:todo_app/token_box.dart';
+import 'package:todo_app/adapter/token_box.dart';
 import 'package:todo_app/ui/screens/edit_screen.dart';
 import '../../model/product_model.dart';
 import 'create_screen.dart';
@@ -63,13 +63,13 @@ class _ProductListPageState extends State<ProductListPage> {
         title: Text('Product List'),
       ),
       body: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 5,
-          mainAxisSpacing: 5
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 5,
+            mainAxisSpacing: 5
         ),
         itemCount: products.length,
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         itemBuilder: (BuildContext context, int index) {
           final product = products[index];
           return ProductWidget(
@@ -90,15 +90,15 @@ class _ProductListPageState extends State<ProductListPage> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
-              backgroundColor: Colors.red,
-              onPressed: () async {
-                final tokenBox = TokenBox();
-                await tokenBox.deleteToken();
-                Get.offAllNamed('/login');
-              },
-              child: Icon(Icons.logout, color: Colors.white),
+            backgroundColor: Colors.red,
+            onPressed: () async {
+              final tokenBox = TokenBox();
+              await tokenBox.deleteToken();
+              Get.offAllNamed('/login');
+            },
+            child: const Icon(Icons.logout, color: Colors.white),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           FloatingActionButton(
             backgroundColor: Colors.indigo,
             onPressed: () async {
@@ -108,7 +108,7 @@ class _ProductListPageState extends State<ProductListPage> {
                 fetchProducts();
               }
             },
-            child: Icon(Icons.add, color: Colors.white),
+            child: const Icon(Icons.add, color: Colors.white),
           ),
         ],
       ),

@@ -1,27 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:todo_app/authentication.dart';
-import 'package:todo_app/ui/screens/product_list.dart';
-import 'package:todo_app/token_box.dart';
+import 'package:todo_app/operations/authentication.dart';
 
 class LoginUI extends StatelessWidget {
   LoginUI({Key? key}) : super(key: key);
-
-  final tokenBox = TokenBox();
-
-  void loginUser(String username, String password) async {
-    final token = await authenticateUser(username, password);
-    if (token != null) {
-      tokenBox.saveToken(token);
-      Get.to(ProductListPage());
-    } else {
-      Get.snackbar(
-          "Authentication Failed",
-          "Invalid User Login",
-          colorText: Colors.white,
-          backgroundColor: Colors.blue);
-    }
-  }
 
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -33,8 +14,8 @@ class LoginUI extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 50),
-            Padding(
-              padding: const EdgeInsets.all(15.0),
+            const Padding(
+              padding: EdgeInsets.all(15.0),
               child: Text(
                 'Login Information',
                 style: TextStyle(fontSize: 28
