@@ -11,8 +11,8 @@ Future<String?> authenticateUser (String username, String password) async {
   };
 
   final body = jsonEncode({
-    'userNameOrEmailAddress' : username,
-    'password' : password
+    'userNameOrEmailAddress' : 'asif',
+    'password' : 'password1'
   });
 
   try {
@@ -21,12 +21,11 @@ Future<String?> authenticateUser (String username, String password) async {
     if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body);
       final accessToken = jsonResponse['result']['accessToken'] as String;
-      if (accessToken != null) {
-        final tokenBox = TokenBox();
-        await tokenBox.saveToken(accessToken);
-        return accessToken;
-      }
-    }
+      final tokenBox = TokenBox();
+      await tokenBox.saveToken(accessToken);
+      //print(accessToken);
+      return accessToken;
+        }
   } catch (e) {
     print("Authentication Failed: $e");
   }
