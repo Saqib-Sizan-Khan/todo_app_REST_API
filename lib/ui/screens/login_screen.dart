@@ -12,6 +12,7 @@ class LoginUI extends StatelessWidget {
   void loginUser(String username, String password) async {
     final token = await authenticateUser(username, password);
     if (token != null) {
+      tokenBox.saveToken(token);
       Get.to(ProductListPage());
     } else {
       Get.snackbar(

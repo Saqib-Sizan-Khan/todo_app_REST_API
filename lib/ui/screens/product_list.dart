@@ -86,16 +86,31 @@ class _ProductListPageState extends State<ProductListPage> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.cyanAccent,
-        onPressed: () async {
-          // Navigate to the screen for creating a new product
-          final shouldRefreshList = await Get.to(CreateProductScreen());
-          if (shouldRefreshList) {
-            fetchProducts();
-          }
-        },
-        child: Icon(Icons.add),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+              backgroundColor: Colors.red,
+              onPressed: () async {
+                final tokenBox = TokenBox();
+                await tokenBox.deleteToken();
+                Get.offAllNamed('/login');
+              },
+              child: Icon(Icons.logout, color: Colors.white),
+          ),
+          SizedBox(height: 10),
+          FloatingActionButton(
+            backgroundColor: Colors.indigo,
+            onPressed: () async {
+              // Navigate to the screen for creating a new product
+              final shouldRefreshList = await Get.to(CreateProductScreen());
+              if (shouldRefreshList) {
+                fetchProducts();
+              }
+            },
+            child: Icon(Icons.add, color: Colors.white),
+          ),
+        ],
       ),
     );
   }

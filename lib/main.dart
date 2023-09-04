@@ -3,14 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todo_app/token_box.dart';
 import 'package:todo_app/ui/screens/login_screen.dart';
+import 'package:todo_app/ui/screens/product_list.dart';
 
 void main() async {
+  //Using this for https link
   if (Platform.isWindows || Platform.isAndroid) {
     HttpOverrides.global = MyHttpOverrides();
   }
+  WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  runApp(const MyApp());
+  runApp(MyApp(initialRoute: await _determineInitialRoute()));
 }
 
 class MyHttpOverrides extends HttpOverrides {
@@ -21,8 +25,17 @@ class MyHttpOverrides extends HttpOverrides {
   }
 }
 
+Future<String> _determineInitialRoute() async {
+  final tokenBox = TokenBox();
+  final accessToken = await tokenBox.getToken();
+
+  return accessToken != null ? '/productList' : '/login';
+}
+
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String initialRoute;
+
+  MyApp({super.key, required this.initialRoute});
 
   // This widget is the root of your application.
   @override
@@ -33,7 +46,11 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      home: LoginUI(),
+      initialRoute: initialRoute,
+      routes: {
+        '/productList' : (context) => ProductListPage(),
+        '/login' : (context) => LoginUI()
+      },
     );
   }
 }
