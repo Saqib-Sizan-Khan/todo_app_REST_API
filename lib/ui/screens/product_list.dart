@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:todo_app/token_box.dart';
-import 'package:todo_app/ui/edit_screen.dart';
-import '../model/product_model.dart';
+import 'package:todo_app/ui/screens/edit_screen.dart';
+import '../../model/product_model.dart';
 import 'create_screen.dart';
-import 'product_widget.dart';
+import '../widget/product_widget.dart';
 
 class ProductListPage extends StatefulWidget {
   @override
@@ -77,17 +77,23 @@ class _ProductListPageState extends State<ProductListPage> {
             name: product.name,
             description: product.description,
             isAvailable: product.isAvailable,
-            onEdit: () {
-              Get.to(EditProductScreen(product: product));
+            onEdit: () async {
+              final shouldRefreshList = await Get.to(EditProductScreen(product: product));
+              if (shouldRefreshList) {
+                fetchProducts();
+              }
             },
           );
         },
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.cyanAccent,
-        onPressed: () {
+        onPressed: () async {
           // Navigate to the screen for creating a new product
-          Get.to(CreateProductScreen());
+          final shouldRefreshList = await Get.to(CreateProductScreen());
+          if (shouldRefreshList) {
+            fetchProducts();
+          }
         },
         child: Icon(Icons.add),
       ),

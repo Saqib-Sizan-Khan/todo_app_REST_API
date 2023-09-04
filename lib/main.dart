@@ -1,12 +1,9 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:todo_app/login_screen.dart';
-import 'dart:io';
-import 'package:http/http.dart' as http;
+import 'package:todo_app/ui/screens/login_screen.dart';
 
 void main() async {
   if (Platform.isWindows || Platform.isAndroid) {

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:todo_app/token_box.dart';
-import '../model/product_model.dart';
+import '../../model/product_model.dart';
 
 class EditProductScreen extends StatefulWidget {
   final Product product;
@@ -37,7 +37,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     super.dispose();
   }
 
-  Future<void> _saveChanges() async {
+  Future<bool> _saveChanges() async {
     final url = Uri.parse('https://stg-zero.propertyproplus.com.au/api/services/app/ProductSync/CreateOrEdit');
 
     final tokenBox = TokenBox();
@@ -45,7 +45,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
     if (accessToken == null) {
       print("Access token not available.");
-      return;
+      return false;
     }
 
     final headers = <String, String>{
@@ -72,12 +72,13 @@ class _EditProductScreenState extends State<EditProductScreen> {
       if (response.statusCode == 200) {
         // Product data successfully edited or created
         Navigator.pop(context, true); // Return true to indicate success
+        return true;
       } else {
-        print('Failed to edit or create product. Status code: ${response.statusCode}');
-        // Handle error, show a message to the user, etc.
+        return false;
       }
     } catch (e) {
       print("Request failed: $e");
+      return false;
       // Handle error, show a message to the user, etc.
     }
   }

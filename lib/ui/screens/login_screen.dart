@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_app/authentication.dart';
-import 'package:todo_app/ui/product_list.dart';
+import 'package:todo_app/ui/screens/product_list.dart';
 import 'package:todo_app/token_box.dart';
 
 class LoginUI extends StatelessWidget {
